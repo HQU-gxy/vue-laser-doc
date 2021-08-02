@@ -14,6 +14,9 @@ Maybe I should use an organization account: [Transferring a repository - GitHub 
 You need to use [Pandoc](https://pandoc.org/) and [TeX Live](https://www.tug.org/texlive/)
 
 ```bash
-pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometry:margin=1in protocol/README.md  -o target/protocol.pdf
-pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometry:margin=1in manual/README.md  -o target/manual.pdf
+# resource-path should be the path of file in here
+pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometry:margin=1in protocol/README.md  -o target/protocol.pdf --resource-path protocol/
+pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometry:margin=1in manual/README.md  -o target/manual.pdf --resource-path manual/
 ```
+
+See [Relative images are relative to working directory, not file · Issue #3752 · jgm/pandoc](https://github.com/jgm/pandoc/issues/3752)
