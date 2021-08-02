@@ -175,7 +175,7 @@ http://example.com:8080/api
 # 杂项
 
 ## 经纬度含义
-根据 [GGA](https://www.trimble.com/ec_receiverhelp/v4.42/en/NMEA-0183messages_GNS.htm) 规范
+根据 [NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183) 规范
 
 - 纬度 ddmm.mmmm 
 - 经度 dddmm.mmmm 
