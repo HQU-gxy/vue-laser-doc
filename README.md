@@ -19,4 +19,6 @@ pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometr
 pandoc -N -s --toc  --pdf-engine=xelatex -V CJKmainfont='STZhongsong' -V geometry:margin=1in manual/README.md  -o target/manual.pdf --resource-path manual/
 ```
 
+The pre-compiled file should be found in [Releases](https://github.com/crosstyan/vue-laser-doc/releases) of the repo. 
+
 See [Relative images are relative to working directory, not file · Issue #3752 · jgm/pandoc](https://github.com/jgm/pandoc/issues/3752)
