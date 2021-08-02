@@ -1,7 +1,7 @@
 # 准备事项
 这是一篇前端页面指南, 不包含树莓派的初始配置. 那玩意我还没写. 
 
-找到树莓派的 IP 本机地址. 通过 `ssh` 或者树莓派终端输入 `ifcon../fig` 可以容易地找到其地址
+找到树莓派的 IP 本机地址. 通过 `ssh` 或者树莓派终端输入 `ifconfig` 可以容易地找到其地址
 ```
 eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
         ether dc:a6:32:f1:4c:1d  txqueuelen 1000  (Ethernet)
