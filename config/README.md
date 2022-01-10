@@ -64,7 +64,7 @@ sudo gateway-config
 
 如果需要启用 [Adaptive Data Rate (自适应数据传输速率)](https://www.thethingsnetwork.org/docs/lorawan/adaptive-data-rate/) 功能, 可以选择 `Chirpstack ADR Configure` => `Enable ADR`.
 
-此时使用外部浏览器访问 `http://树莓派的IP:8080/` 即可访问 [ChirpStack](https://www.chirpstack.io/) 的网关配置界面.
+此时使用外部浏览器访问 `http://[树莓派IP]:8080/` 即可访问 [ChirpStack](https://www.chirpstack.io/) 的网关配置界面.
 
 ![ChirpStack Gateway Config](../fig/chirpstack-ui.png)
 
@@ -91,7 +91,7 @@ cd ~
 
 ### 数据库配置
 
-用 `wget` 亦可
+用 `wget` 亦可下载, 下面使用`curl`演示
 
 ```bash
 curl https://raw.githubusercontent.com/HQU-gxy/vue-laser-backend/master/sql/jiguang.sql -O
@@ -99,10 +99,132 @@ curl https://raw.githubusercontent.com/HQU-gxy/vue-laser-backend/master/sql/jigu
 
 若出现 `curl: (35) OpenSSL SSL_connect: Connection reset by peer in connection to raw.githubusercontent.com:443` 检查你的代理配置, 或者从源码仓库中的 [sql/jiguang.sql](https://github.com/HQU-gxy/vue-laser-backend/blob/master/sql/jiguang.sql) 下载, 然后使用 SFTP 或者其他方法的上传到树莓派.
 
+安装完成后, 运行 `mysql_secure_installation` 进行数据库安全设置, 并设置`root`密码. 参见 [mysql_secure_installation - MariaDB Knowledge Base](https://mariadb.com/kb/en/mysql_secure_installation/)
+
+使用 `mysql` 命令连接数据库 (可能会需要 `-u`和`-p`参数), 并执行 `SOURCE jiguang.sql;` 命令, 完成数据库的初始化.
+
 ### 启动服务器
 
 ```bash
+mkdir laser-java
+cd laser-java
 curl https://github.com/HQU-gxy/vue-laser-backend/releases/download/v0.0.1/target.zip -LO
+unzip target.zip
+rm target.zip
 ```
 
 若下载失败, 检查你的代理配置, 中国大陆网络环境问题不再赘述.
+
+此时文件目录结构如下:
+
+```text
+laser-java
+├── config
+│   └── application.yml
+└── demo-maven-assembly.jar
+```
+
+运行 `java -jar demo-maven-assembly.jar` 即可启动服务器, 如有任何错误, 试着更改 `config/application.yml` 配置文件, 很有可能是数据库配置错误.
+
+## 前端网页展示配置
+
+有很多种方式可以完成前端网页展示配置, 下面使用 [`Node.js`](https://nodejs.org/) 配置开发服务器. 还有一种方式是在本地编译静态文件后, 将静态文件上传到树莓派, 在树莓派部署 [Nginx](https://www.nginx.com/) 或者 [Apache](https://httpd.apache.org/) 服务器, 在生产环境中更偏向与后者, 鉴于本项目仍在开发阶段, 暂时使用前者.
+
+### 安装 Node.js
+
+树莓派镜像源中的 Node.js 版本过于古老, 不推荐直接使用 `apt` 安装
+
+参见 [How to install Node JS and NPM on the Raspberry Pi – MakerSupplies Singapore](https://www.makersupplies.sg/blogs/tutorials/how-to-install-node-js-and-npm-on-the-raspberry-pi) 和 [audstanley/NodeJs-Raspberry-Pi: Install NodeJs on your Raspberry Pi 1, 2, 3, 4, zero, and zero w](https://github.com/audstanley/NodeJs-Raspberry-Pi)
+
+```bash
+curl https://nodejs.org/dist/v16.13.1/node-v16.13.1-linux-armv7l.tar.xz -LO
+tar -xzf node-v16.13.1-linux-armv7l.tar.xz
+cd node-v16.13.1-linux-armv7l
+sudo cp -R * /usr/local/ # copy all the file into /usr/local (which is in your PATH)
+```
+
+测试一下是否成功安装
+
+```bash
+node -v
+npm -v
+```
+
+### 部署开发服务器
+
+需要安装 [`git`](https://git-scm.com/)
+
+```bash
+sudo apt install git
+```
+
+clone 我的项目 repo 到本地
+
+```bash
+git clone --recurse-submodules https://github.com/HQU-gxy/vue-laser
+```
+
+如果卡住不动, 或者出错, 多试几次, 或者配置代理
+
+```bash
+cd vue-laser
+npm install
+npm serve
+```
+
+若 npm 速度慢可以考虑[配置中国 NPM 镜像](https://npmmirror.com/)
+
+访问 `http://[树莓派IP]:8081` 应该就能看到它了
+
+### 部署生产服务器
+
+**Optional Step**
+安装 Nginx, `npm build`, 写 `nginx.conf`, 静态文件丢到 `/var/www/html/` (某个随意的目录) 下, 并启动服务器.
+
+## 开机自启
+
+参照 [systemd - 编写单元文件 - ArchWiki](https://wiki.archlinux.org/title/Systemd_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29#%E7%BC%96%E5%86%99%E5%8D%95%E5%85%83%E6%96%87%E4%BB%B6)
+
+把创建好的 Unit files 丢到 `/usr/lib/systemd/system` 然后 `sudo systemctl enable [你的 Unit file 名称]` 即可
+
+### 前端 Unit 配置文件
+
+```ini
+[Unit]
+# Human readable name of the unit
+Description=Frontend server
+
+[Service]
+# Command to execute when the service is started
+ExecStart=/usr/local/npm --prefix /home/pi/vue-laser/ serve
+# set User variable as current user (pi in raspberry pi OS)
+Type=idle
+User=pi
+
+[Install]
+WantedBy=default.target
+```
+
+### 后端 Unit 配置文件
+
+```ini
+[Unit]
+# Human readable name of the unit
+Description=Java backend server
+
+[Service]
+# Command to execute when the service is started
+ExecStart=java -jar /home/pi/java-laser/demo-maven-assembly.jar
+# set User variable as current user (pi in raspberry pi OS)
+Type=idle
+User=pi
+
+[Install]
+WantedBy=default.target
+```
+
+## 网关添加新设备
+
+见 [HQU-gxy/vue-laser-utils](https://github.com/HQU-gxy/vue-laser-utils)
+
+由于 Node.js 跨平台性能不佳, 预计使用 Go 或者 Rust 重写, 目前先手动配置罢.
