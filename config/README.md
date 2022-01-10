@@ -103,6 +103,8 @@ curl https://raw.githubusercontent.com/HQU-gxy/vue-laser-backend/master/sql/jigu
 
 使用 `mysql` 命令连接数据库 (可能会需要 `-u`和`-p`参数), 并执行 `SOURCE jiguang.sql;` 命令, 完成数据库的初始化.
 
+**权限问题请参照:** [mysql - Access denied for user 'root'@'localhost' (using password: YES) after new installation on Ubuntu - Stack Overflow](https://stackoverflow.com/questions/28068155/access-denied-for-user-rootlocalhost-using-password-yes-after-new-instal)
+
 ### 启动服务器
 
 ```bash
