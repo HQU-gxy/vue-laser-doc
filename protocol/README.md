@@ -5,7 +5,7 @@ version 0.11
 ```
 application/2/device/32722cdd1c277953/rx 
 ```
-```json
+```jsonc
 {
     "applicationID": "2",       //应用ID, 没用, 目前暂定为2
     "applicationName": "app",   //名称, 没用
@@ -43,7 +43,7 @@ application/2/device/32722cdd1c277953/rx
 mosquitto_pub -h example.com -t "application/2/device/32722cdd1c277953/tx" -f test.json -d
 ```
 
-```json
+```jsonc
 {
     "confirmed": true,
     "fPort": 10,
@@ -87,7 +87,7 @@ http://example.com:8080/api
 00 80 01 01 43 53 12 F6 10 EC 1B 0E 00 7B 8A
 ```
 
-```json
+```jsonc
 {
     "冗余位":0,
     "剩余弹药":128,
@@ -125,7 +125,7 @@ http://example.com:8080/api
 40 01 C8 00 78 5B
 ```
 
-```json
+```jsonc
 {
     "开枪士兵编号":456,
     "被击中士兵编号":123,
@@ -148,14 +148,14 @@ http://example.com:8080/api
 `fport` 为 `3`. data 为 0 时开始演习, 为 1 时停止演习. 
 
 - 开始演习
-```json
+```jsonc
 {
     "fPort": 3,
     "data": "AA==" //base64 encoded 0x00
 }
 ```
 - 结束演习
-```json
+```jsonc
 {
     "fPort": 3,
     "data": "AQ==" //base64 encoded 0x01
@@ -164,7 +164,7 @@ http://example.com:8080/api
 
 ### 重填子弹
 `fport` 为 `5`. data 为装填子弹数目. 
-```json
+```jsonc
 {
     "fPort": 5,
     "data": "Hg==" //base64 encoded 0x1E = 30 
