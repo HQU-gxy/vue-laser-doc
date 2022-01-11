@@ -160,7 +160,7 @@ npm -v
 sudo apt install git
 ```
 
-clone 我的项目 repo 到本地
+clone [项目 repo](https://github.com/HQU-gxy/vue-laser) 到本地
 
 ```bash
 git clone --recurse-submodules https://github.com/HQU-gxy/vue-laser
@@ -171,6 +171,7 @@ git clone --recurse-submodules https://github.com/HQU-gxy/vue-laser
 ```bash
 cd vue-laser
 npm install
+mv src/global.default.ts src/global.ts
 npm serve
 ```
 
