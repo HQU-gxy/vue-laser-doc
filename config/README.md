@@ -176,6 +176,13 @@ npm serve
 
 若 npm 速度慢可以考虑[配置中国 NPM 镜像](https://npmmirror.com/)
 
+- [华为开源镜像站新手指导（NPM篇）_开源镜像站_DevCloud_华为云论坛](https://bbs.huaweicloud.com/forum/forum.php?mod=viewthread&tid=1803)
+
+```bash
+npm config set registry https://repo.huaweicloud.com/repository/npm/
+npm cache clean -f
+```
+
 访问 `http://[树莓派IP]:8081` 应该就能看到它了
 
 ### 部署生产服务器
