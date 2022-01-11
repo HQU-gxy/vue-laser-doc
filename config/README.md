@@ -224,7 +224,7 @@ Description=Java backend server
 
 [Service]
 # Command to execute when the service is started
-ExecStart=java -jar /home/pi/java-laser/demo-maven-assembly.jar
+ExecStart=java -jar /home/pi/laser-java/demo-maven-assembly.jar
 # set User variable as current user (pi in raspberry pi OS)
 Type=idle
 User=pi
