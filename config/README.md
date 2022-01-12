@@ -172,7 +172,7 @@ git clone --recurse-submodules https://github.com/HQU-gxy/vue-laser
 cd vue-laser
 npm install
 mv src/global.default.ts src/global.ts
-npm serve
+npm run serve
 ```
 
 若 npm 速度慢可以考虑[配置中国 NPM 镜像](https://npmmirror.com/)
@@ -183,6 +183,23 @@ npm serve
 npm config set registry https://repo.huaweicloud.com/repository/npm/
 npm cache clean -f
 ```
+
+#### 安装 yarn
+
+`npm` 对项目依赖的解析可能会出现问题, 因为本项目使用 `yarn` 作为包管理器, 故需要安装 `yarn` 以确保兼容性
+
+```bash
+sudo npm i -g corepack
+yarn install
+yarn serve
+```
+
+#### 禁用 `eslint`
+
+按理来说 `yarn serve` 出现的结果不应该出现任何有关 `eslint` 的错误. 但如果出现了任何编译错误, 在 `.eslintignore` 中添加一行 `src` 使其
+忽略整个项目.
+
+**如果你在尝试开发本项目, 请尽量配置好 `eslint`, 对代码进行质量检查和风格统一是极其重要的**
 
 访问 `http://[树莓派IP]:8081` 应该就能看到它了
 
@@ -206,7 +223,7 @@ Description=Frontend server
 
 [Service]
 # Command to execute when the service is started
-ExecStart=/usr/local/npm --prefix /home/pi/vue-laser/ serve
+ExecStart=/usr/local/npm run --prefix /home/pi/vue-laser/ serve
 # set User variable as current user (pi in raspberry pi OS)
 Type=idle
 User=pi
@@ -224,10 +241,9 @@ Description=Java backend server
 
 [Service]
 # Command to execute when the service is started
-ExecStart=java -jar /home/pi/laser-java/demo-maven-assembly.jar
+ExecStart=java -jar /home/pi/laser-java/demo-maven-assembly.jar --spring.config.location=/home/pi/laser-java/config/
 # set User variable as current user (pi in raspberry pi OS)
 Type=idle
-User=pi
 
 [Install]
 WantedBy=default.target
@@ -235,6 +251,21 @@ WantedBy=default.target
 
 ## 网关添加新设备
 
-见 [HQU-gxy/vue-laser-utils](https://github.com/HQU-gxy/vue-laser-utils)
+优先使用 [HQU-gxy/chirpstack-utils-rust](https://github.com/HQU-gxy/chirpstack-utils-rust/tree/master)
 
-由于 Node.js 跨平台性能不佳, 预计使用 Go 或者 Rust 重写, 目前先手动配置罢.
+可参考 [HQU-gxy/vue-laser-utils](https://github.com/HQU-gxy/vue-laser-utils) 以进行假数据生成
+
+## 杂项
+
+```bash
+# 服务器端口
+# https://blog.csdn.net/yuer5531/article/details/106091100
+# spring.profiles.active=test
+# envrionment varible or application.yaml
+# http://www.javaboy.org/2019/0530/application.properties.html
+# mvn spring-boot:run
+# mvn jar:jar
+# https://blog.csdn.net/Mrqiang9001/article/details/114211224
+# java ${JAVA_OPT} -jar ${BASE_PATH}/target/${APPLICATION_JAR} --spring.config.location=${CONFIG_DIR} > ${LOG_PATH} 2>&1 &
+# java -jar --spring.config.location=conf
+```
