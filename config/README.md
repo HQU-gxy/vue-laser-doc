@@ -223,7 +223,7 @@ Description=Frontend server
 
 [Service]
 # Command to execute when the service is started
-ExecStart=/usr/local/npm run --prefix /home/pi/vue-laser/ serve
+ExecStart=/usr/local/bin/npm run --prefix /home/pi/vue-laser/ serve
 # set User variable as current user (pi in raspberry pi OS)
 Type=idle
 User=pi
