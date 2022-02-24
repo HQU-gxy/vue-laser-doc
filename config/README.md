@@ -140,7 +140,7 @@ laser-java
 
 ```bash
 curl https://nodejs.org/dist/v16.13.1/node-v16.13.1-linux-armv7l.tar.xz -LO
-tar -xzf node-v16.13.1-linux-armv7l.tar.xz
+tar -xJf node-v16.13.1-linux-armv7l.tar.xz
 cd node-v16.13.1-linux-armv7l
 sudo cp -R * /usr/local/ # copy all the file into /usr/local (which is in your PATH)
 ```
