@@ -222,7 +222,9 @@ yarn serve
 Description=Frontend server
 
 [Service]
-# Command to execute when the service is started
+# if you using yarn
+# ExecStart=yarn --cwd /home/pi/vue-laser/ serve
+# See https://stackoverflow.com/questions/46891622/run-yarn-in-a-different-path
 ExecStart=/usr/local/bin/npm run --prefix /home/pi/vue-laser/ serve
 # set User variable as current user (pi in raspberry pi OS)
 Type=idle
