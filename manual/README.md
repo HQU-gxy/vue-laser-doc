@@ -24,28 +24,27 @@
 
 ### 添加经纬度
 下面以高德经纬度坐标为例，演示如何添加拾取经纬度
-进入高德坐标拾取器：https://lbs.amap.com/tools/picker
-搜索所需要进行演习的地点，确定演习地点。
-![军源体育]（../fig/map_gaode.png)
+进入高德坐标拾取器：https://lbs.amap.com/tools/picker  搜索所需要进行演习的地点，确定演习地点。
+![军源体育](..fig/map_gaode.png)
 
 框出所需要演习地点的范围，并得到左上角，右下角经纬度坐标。
-![军源体育范围]（../fig/junyuan_map.png)
+![军源体育范围](..fig/junyuan_map.png)
 
 将鼠标移至对应点，即可得到对应坐标
 #### 左上角
 - **左上角纬度** 24.946647
 - **左上角经度** 118.477937
-![军源体育左上角]（../fig/junyuan_left.png)
+![军源体育左上角](..fig/junyuan_left.png)
 
 #### 加密右下角
 - **右下角纬度** 24.943427
 - **右下角经度** 118.481681
-![军源体育右下角]（../fig/junyuan_right.png)
+![军源体育右下角](..fig/junyuan_right.png)
 
 #### 百度地图转换坐标系
 若使用百度地图，经纬度有加密算法，采取了另一套坐标系，而GPS模块采取的坐标系是GCJ02坐标系，需要在转换网站进行转化，将坐标系转化为GCJ02
 转化工具地址：https://tool.lu/coordinate/
-![转化工具地址]（../fig/map_trans.png)
+![军源体育右下角](..fig/map_trans.png)
 
 ### 信息载入
 - **名称** 军源
