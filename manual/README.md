@@ -1,43 +1,14 @@
 # 准备事项
-这是一篇前端页面指南, 不包含树莓派的初始配置. 那玩意我还没写. 
-
-找到树莓派的 IP 本机地址. 通过 `ssh` 或者树莓派终端输入 `ifconfig` 可以容易地找到其地址
-```
-eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
-        ether dc:a6:32:f1:4c:1d  txqueuelen 1000  (Ethernet)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 0  bytes 0 (0.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-        inet 127.0.0.1  netmask 255.0.0.0
-        inet6 ::1  prefixlen 128  scopeid 0x10<host>
-        loop  txqueuelen 1000  (Local Loopback)
-        RX packets 818491  bytes 165738595 (158.0 MiB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 818491  bytes 165738595 (158.0 MiB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 192.168.43.61  netmask 255.255.255.0  broadcast 192.168.43.255
-        inet6 2408:8448:4401:35f4:70d1:1bc:3d5c:9354  prefixlen 64  scopeid 0x0<global>
-        inet6 fe80::b5c0:5824:dabe:3cbc  prefixlen 64  scopeid 0x20<link>
-        ether dc:a6:32:f1:4c:1e  txqueuelen 1000  (Ethernet)
-        RX packets 7160  bytes 550756 (537.8 KiB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 11789  bytes 10105102 (9.6 MiB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-如上面的输出, 得到内网地址为 `192.168.43.61`, 则在树莓派同一局域网环境下用任何现代浏览器 (如 Chrome, Edge, Firefox 或 Safari 浏览器) 访问 `http://192.168.43.61:8081` 即可登录到前端交互页面. 
+打开终端浏览器，地址输入'127.0.0.1:8083'进入登陆界面
 
 ![登陆页面](../fig/login.png)
 
 点击登录即可登录到管理页面. 
 
 # 地图
-## 新建地图
-若是首次使用该系统, 需要新建一张地图方便之后的演习调用
+## 添加地图
+### 新建地图
+若是首次使用该系统, 需要新建一张地图方便之后的演习调用，以高德地图为例
 
 ![新建地图](../fig/new_map.png)
 
@@ -51,6 +22,41 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 - **右下角的经度** 
 - **备注** 备注信息
 
+### 添加经纬度
+下面以高德经纬度坐标为例，演示如何添加拾取经纬度
+进入高德坐标拾取器：https://lbs.amap.com/tools/picker  搜索所需要进行演习的地点，确定演习地点。
+![军源体育](../fig/map_gaode.png)
+
+框出所需要演习地点的范围，并得到左上角，右下角经纬度坐标。
+![军源体育范围](../fig/junyuan_map.png)
+
+将鼠标移至对应点，即可得到对应坐标
+#### 左上角
+- **左上角纬度** 24.946647
+- **左上角经度** 118.477937
+![军源体育左上角](../fig/junyuan_left.png)
+
+#### 右下角
+- **右下角纬度** 24.943427
+- **右下角经度** 118.481681
+![军源体育右下角](../fig/junyuan_right.png)
+
+#### 百度地图转换坐标系
+若使用百度地图，需要对坐标进行转化，将坐标系转化为GCJ02。 转化工具地址：https://tool.lu/coordinate/
+![坐标系转换](../fig/map_trans.png)
+
+### 信息载入
+- **名称** 军源
+- **图片** 军源体育范围
+- **左上角的纬度** 24.946647
+- **左上角的经度** 118.477937
+- **右下角的纬度** 24.943427
+- **右下角的经度** 118.481681
+- **备注** 军源体育地图1
+
+![信息载入示例](../fig/map_exam.png)
+
+
 ## 管理地图
 在此页面可以查看和删除已经设置好的地图
 
@@ -58,13 +64,13 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 
 # 演习
-## 新建方案
+## 添加方案
+### 新建方案
 新建演习需要以下信息
 
 ![新建演习](../fig/new_train_sch.png)
 
 - **演习名称** 该演习方案的名称
-- **演习地图** 该演习方案所使用的地图
 - **演习地图** 该演习方案所使用的地图
 - **红方人员** 该演习中红方人员的详细信息
   - **姓名** 该人员在演习系统中显示的姓名
@@ -76,6 +82,28 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 - **蓝方人员** 该演习中蓝方人员的详细信息, 具体参照上方*红方人员*的说明
 - **演习模式** 保留位, 目前无实际作用
 
+设备编号可在下拉菜单中进行选择，添加设备可在设备管理界面进行管理
+![下拉列表](../fig/device_chose.png)
+
+### 新建方案示例
+首先查看设备列表，确定人员编号与设备编号
+![人员与设备编号](../fig/list.png)
+
+添加人员示例
+![人员示例](../fig/device_chose.png)
+- **演习名称** 军源体育训练一
+- **演习地图** 军源体育范围
+- **红方人员** 
+  - **姓名** 张三
+  - **性别** 男
+  - **年龄** 18
+  - **所属单位** 炮兵
+  - **人员编号** 123
+  - **设备编号** eec258c0018d2c8b
+- **蓝方人员** 该演习中蓝方人员的详细信息, 具体参照上方*红方人员*的说明
+- **演习模式** 保留位, 目前无实际作用
+
+
 ## 方案管理
 可以查看已经创建好的方案, 并且执行
 
@@ -86,6 +114,8 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 ## 当前演习
 在该页面中可以观察已经开始的演习
 
+刚才创建的演习示例
+![演习示例](../fig/sch_example.png)
 > 若地图加载不出来, 见[常见错误](#常见错误)
 
 若出现「是否开始录屏」的提示, 根据自身需求选择即可
@@ -113,6 +143,9 @@ wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 若开启了录屏功能, 则可以在此处看到演习的录屏回放和战局的统计信息. 
 
 ![演习回放](../fig/record_his.png)
+
+
+## 设备管理
 
 # 常见错误
 
